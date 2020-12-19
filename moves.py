@@ -50,9 +50,24 @@ def move_pawn(board_instance, color, current_row, current_col, proposed_row, pro
         if not board_instance.check_presence(check[1][0], check[1][1]): available_spaces.append(str(check[1][1])+str(check[1][0]))
         if not board_instance.check_presence(check[2][0], check[2][1]): available_spaces.append(str(check[2][1])+str(check[2][0]))
     else:
-        if not board_instance.check_presence(check[0][0], check[0][1]): available_spaces.append(str(check[0][1])+str(check[0][0]))
-        if board_instance.check_presence(check[1][0], check[1][1]): available_spaces.append(str(check[1][1])+str(check[1][0]))
-        if board_instance.check_presence(check[2][0], check[2][1]): available_spaces.append(str(check[2][1])+str(check[2][0]))
+        if not board_instance.check_presence(check[0][0], check[0][1]): 
+            available_spaces.append(str(check[0][1])+str(check[0][0]))
+            print('correct piece appended :D')
+        if not board_instance.check_presence(check[1][0], check[1][1]): 
+            available_spaces.append(str(check[1][1])+str(check[1][0]))
+            print('not 1')
+        #for some reason the result of check_presence changes once a black pawn passes row 5 (current_row > 5)
+        if (current_row > 4):
+            if not board_instance.check_presence(check[2][0], check[2][1]): 
+                available_spaces.append(str(check[2][1])+str(check[2][0]))
+                print('not 2 1')
+            if board_instance.check_presence(check[0][0], check[0][1]): 
+                available_spaces.append(str(check[0][1])+str(check[0][0]))
+                print('correct piece appended :D')
+        else:
+            if board_instance.check_presence(check[2][0], check[2][1]): 
+                available_spaces.append(str(check[2][1])+str(check[2][0]))
+                print('not 2 2')
     print('available spaces: ',available_spaces)
     #check if proposed move is an available space
     proposed_col_num = get_col_num(proposed_col)

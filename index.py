@@ -109,7 +109,7 @@ def game():
     winner_1 = ''
     winner_2 = ''
     while True:
-        os.system('clear')
+        #os.system('clear')
         board.display()
         print('press s to save for later, q to quit, or any other key to continue', end=' ')
         selection = input()

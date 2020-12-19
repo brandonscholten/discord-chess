@@ -120,7 +120,7 @@ ____
             space_info = space.split('_')
             if (space_info[-1] != 'empty'): return True
             else: return False
-        except IndexError: return True
+        except IndexError: return 'edge'
 
     #save the board as a text file
     def save(filename):
@@ -128,4 +128,4 @@ ____
         for x in baord.board:
             f.write(x)
         f.close()
-        print('game saved')
+        print('game saved') 
