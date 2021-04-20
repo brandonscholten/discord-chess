@@ -158,8 +158,9 @@ while True:
     if (choice == '1'):
         try:
             winner = game()
-        except:
-            print('fatal error occured')
+        except Exception as e: # work on python 3.x
+            print('fatal error occured:')
+            print(e)
         try:
             print('Check mate! The winner is: '+winner)
         except: 

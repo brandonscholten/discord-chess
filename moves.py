@@ -83,7 +83,15 @@ def move_pawn(board_instance, color, current_row, current_col, proposed_row, pro
         print('pawn moved from '+str(current_row)+current_col+' to '+str(proposed_row)+proposed_col)
         return True
     else: return False
-def move_rook(baord_instance, current_row, current_col, proposed_row, proposed_col):
+def move_rook(board_instance, color, current_row, current_col, proposed_row, proposed_col):
+    #more debug logs
+    print('move_rook function works!')
+    print('board_instance: '+str(board_instance))
+    print('current_row:    '+str(current_row))
+    print('current_col:    '+str(current_col))
+    print('proposed_row:   '+str(proposed_row))
+    print('proposed_col:   '+str(proposed_col))
+    ################
     available_spaces = []
     current_col_num = get_col_num(current_col)
     #calculate available spaces
@@ -92,40 +100,41 @@ def move_rook(baord_instance, current_row, current_col, proposed_row, proposed_c
     i=0
     while True:
         if not board_instance.check_presence(current_row+i, current_col_num): 
-            available_spaces.append(str(current_col)+current_row+i)
+            available_spaces.append(str(current_col)+str(current_row+i))
             i+=1
         elif board_instance.check_presence(current_row+i, current_col_num): 
-            available_spaces.append(str(current_col)+current_row+i)
+            available_spaces.append(str(current_col)+str(current_row+i))
             break
     #left i
     i=0
     while True:
         if not board_instance.check_presence(current_row, current_col_num-i):
-            available_spaces.append(str(get_col_letter(current_col_num-i))+current_row)
+            available_spaces.append(str(get_col_letter(current_col_num-i))+str(current_row))
             i+=1
-        elif baord_instance.check_presence(current_row, current_col_num-i):
-            available_spaces.apend(str(get_col_letter(current_col_num-i))+current_row)
+        elif board_instance.check_presence(current_row, current_col_num-i):
+            available_spaces.append(str(get_col_letter(current_col_num-i))+str(current_row))
             break
     #right i
     i=0
     while True:
         if not board_instance.check_presence(current_row, current_col_num+i):
-            available_spaces.append(str(get_col_letter(current_col_num+i))+current_row)
+            available_spaces.append(str(get_col_letter(current_col_num+i))+str(current_row))
             i+=1
-        elif baord_instance.check_presence(current_row, current_col_num+i):
-            available_spaces.apend(str(get_col_letter(current_col_num+i))+current_row)
+        elif board_instance.check_presence(current_row, current_col_num+i):
+            available_spaces.append(str(get_col_letter(current_col_num+i))+str(current_row))
             break
     #down i
     i=0
     while True:
         if not board_instance.check_presence(current_row-i, current_col_num): 
-            available_spaces.append(str(current_col)+current_row-i)
+            available_spaces.append(str(current_col)+str(current_row-i))
             i+=1
         elif board_instance.check_presence(current_row+i, current_col_num): 
-            available_spaces.append(str(current_col)+current_row-i)
+            available_spaces.append(str(current_col)+str(current_row-i))
             break
     #check if proposed move is an available space
-    availablility = str(proposed_row)+str(proposed_col) in available_spaces
+    print('available space: ',available_spaces)
+    availability = str(proposed_row)+str(proposed_col) in available_spaces
     #move the piece
     #print move information
     if availability: 
@@ -134,7 +143,7 @@ def move_rook(baord_instance, current_row, current_col, proposed_row, proposed_c
         board_instance.set_status(get_col_num(current_col),current_row, 'empty')
         return True
     else: return False
-def move_knight(board_instance, current_row, current_col, proposed_row, proposed_col):
+def move_knight(board_instance, color, current_row, current_col, proposed_row, proposed_col):
     #calculate available spaces
     #check = [[row, column],[row, column]] the available spaces for now are hard coded
     current_col_num = get_col_num(current_col)
@@ -166,7 +175,7 @@ def move_knight(board_instance, current_row, current_col, proposed_row, proposed
     #pirnt the result
     if availability: 
         print('knight moved from '+str(current_row)+current_col+' to '+str(proposed_row)+proposed_col)
-        board_instance.set_status(get_col_num(proposed_col),proposed_row,'knight_'+color)#TODO add color params FUCK
+        board_instance.set_status(get_col_num(proposed_col),proposed_row,'knight_'+color)#TODO add color params
         board_instance.set_status(get_col_num(current_col),current_row, 'empty')
         return True
     else: return False
@@ -190,8 +199,8 @@ def move_bishop(board_instance, current_row, current_col, proposed_row, proposed
         if not board_instance.check_presence(current_row+i, current_col_num-i):
             available_spaces.append(str(get_col_letter(current_col_num-i))+current_row+i)
             i+=1
-        elif baord_instance.check_presence(current_row, current_col_num-i):
-            available_spaces.apend(str(get_col_letter(current_col_num-i))+current_row)
+        elif board_instance.check_presence(current_row, current_col_num-i):
+            available_spaces.append(str(get_col_letter(current_col_num-i))+current_row)
             break
     #down right -i+i
     i=0
@@ -199,8 +208,8 @@ def move_bishop(board_instance, current_row, current_col, proposed_row, proposed
         if not board_instance.check_presence(current_row-i, current_col_num+i):
             available_spaces.append(str(get_col_letter(current_col_num+i))+current_row-i)
             i+=1
-        elif baord_instance.check_presence(current_row-i, current_col_num+i):
-            available_spaces.apend(str(get_col_letter(current_col_num+i))+current_row-i)
+        elif board_instance.check_presence(current_row-i, current_col_num+i):
+            available_spaces.append(str(get_col_letter(current_col_num+i))+current_row-i)
             break
     #down left -i-i
     i=0
@@ -241,8 +250,8 @@ def move_queen(board_instance, current_row, current_col, proposed_row, proposed_
         if not board_instance.check_presence(current_row, current_col_num-i):
             available_spaces.append(str(get_col_letter(current_col_num-i))+current_row)
             i+=1
-        elif baord_instance.check_presence(current_row, current_col_num-i):
-            available_spaces.apend(str(get_col_letter(current_col_num-i))+current_row)
+        elif board_instance.check_presence(current_row, current_col_num-i):
+            available_spaces.append(str(get_col_letter(current_col_num-i))+current_row)
             break
     #right i
     i=0
@@ -250,8 +259,8 @@ def move_queen(board_instance, current_row, current_col, proposed_row, proposed_
         if not board_instance.check_presence(current_row, current_col_num+i):
             available_spaces.append(str(get_col_letter(current_col_num+i))+current_row)
             i+=1
-        elif baord_instance.check_presence(current_row, current_col_num+i):
-            available_spaces.apend(str(get_col_letter(current_col_num+i))+current_row)
+        elif board_instance.check_presence(current_row, current_col_num+i):
+            available_spaces.append(str(get_col_letter(current_col_num+i))+current_row)
             break
     #down i
     i=0
@@ -278,8 +287,8 @@ def move_queen(board_instance, current_row, current_col, proposed_row, proposed_
         if not board_instance.check_presence(current_row+i, current_col_num-i):
             available_spaces.append(str(get_col_letter(current_col_num-i))+current_row+i)
             i+=1
-        elif baord_instance.check_presence(current_row, current_col_num-i):
-            available_spaces.apend(str(get_col_letter(current_col_num-i))+current_row)
+        elif board_instance.check_presence(current_row, current_col_num-i):
+            available_spaces.append(str(get_col_letter(current_col_num-i))+current_row)
             break
     #down right -i+i
     i=0
@@ -287,8 +296,8 @@ def move_queen(board_instance, current_row, current_col, proposed_row, proposed_
         if not board_instance.check_presence(current_row-i, current_col_num+i):
             available_spaces.append(str(get_col_letter(current_col_num+i))+current_row-i)
             i+=1
-        elif baord_instance.check_presence(current_row-i, current_col_num+i):
-            available_spaces.apend(str(get_col_letter(current_col_num+i))+current_row-i)
+        elif board_instance.check_presence(current_row-i, current_col_num+i):
+            available_spaces.append(str(get_col_letter(current_col_num+i))+current_row-i)
             break
     #down left -i-i
     i=0
@@ -309,7 +318,7 @@ def move_queen(board_instance, current_row, current_col, proposed_row, proposed_
         board_instance.set_status(get_col_num(current_col),current_row, 'empty')
         return True
     else: return False
-def move_king(baord_instance, current_row, current_col, proposed_row, proposed_col): #TODO: deny the move if the king is going to be in check
+def move_king(board_instance, current_row, current_col, proposed_row, proposed_col): #TODO: deny the move if the king is going to be in check
     current_col_num = get_col_num(current_col)
     #calculate available spaces
     check = [
@@ -350,7 +359,7 @@ def move(board_instance, piece, current_row, current_col, proposed_row, proposed
     piece_type = piece_info[0]
     piece_color = piece_info[1]
     if (piece_type == 'pawn'): return move_pawn(board_instance, piece_color, current_row, current_col, proposed_row, proposed_col)
-    elif (piece_type == 'rook'): return move_rook(board_instance, current_row, current_col, proposed_row, proposed_col)
+    elif (piece_type == 'rook'): return move_rook(board_instance, piece_color, current_row, current_col, proposed_row, proposed_col)
     elif (piece_type == 'knight'): return move_knight(board_instance, current_row, current_col, proposed_row, proposed_col)
     elif (piece_type == 'bishop'): return move_bishop(board_instance, current_row, current_col, proposed_row, proposed_col)
     elif (piece_type == 'king'): return move_king(board_instance, current_row, current_col, proposed_row, proposed_col)
